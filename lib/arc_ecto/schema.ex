@@ -13,6 +13,8 @@ defmodule Arc.Ecto.Schema do
             options: options
           ] do
       # If given a changeset, apply the changes to obtain the underlying data
+      scope = do_apply_changes(changeset_or_data)
+
       scope =
         case changeset_or_data do
           %Ecto.Changeset{} -> Ecto.Changeset.apply_changes(changeset_or_data)
@@ -65,6 +67,9 @@ defmodule Arc.Ecto.Schema do
       cast(changeset_or_data, arc_params, allowed)
     end
   end
+
+  def do_apply_changes(%Ecto.Changeset{} = changeset), do: Ecto.Changeset.apply_changes(changeset)
+  def do_apply_changes(%{__meta__: _} = data), do: data
 
   def convert_params_to_binary(params) do
     Enum.reduce(params, nil, fn
