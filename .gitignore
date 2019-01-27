@@ -2,5 +2,6 @@
 /deps
 erl_crash.dump
 *.ez
+.elixir_ls
 .DS_Store
 /doc
